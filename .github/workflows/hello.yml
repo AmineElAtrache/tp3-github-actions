@@ -23,7 +23,5 @@ jobs:
           echo "Branche : $GITHUB_REF_NAME"
           echo "Commit : $GITHUB_SHA"
           echo "Événement : $GITHUB_EVENT_NAME"
-      - name: Erreur volontaire
-        run: exit 1
       - name: Fin du workflow
         run: echo "Workflow terminé avec succès."
