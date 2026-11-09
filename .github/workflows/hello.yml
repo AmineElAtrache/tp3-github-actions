@@ -25,5 +25,5 @@ jobs:
           echo "Événement : $GITHUB_EVENT_NAME"
       - name: Erreur volontaire
         run: exit 1
-      - name: Étape après l'erreur
-        run: echo "Cette étape sera ignorée si la précédente échoue."
+      - name: Fin du workflow
+        run: echo "Workflow terminé avec succès."

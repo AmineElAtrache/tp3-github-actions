@@ -1,0 +1,39 @@
+name: CI - Tests Python
+
+on:
+  push:
+  workflow_dispatch:
+    inputs:
+      coverage:
+        description: Seuil minimal de couverture
+        type: choice
+        default: '80'
+        options:
+          - '50'
+          - '70'
+          - '80'
+          - '90'
+          - '100'
+
+permissions:
+  contents: read
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Récupérer le code
+        uses: actions/checkout@v6
+      - name: Configurer Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+          cache: pip
+      - name: Installer les dépendances
+        run: |
+          python --version
+          python -m pip install -r requirements-dev.txt
+      - name: Tests et couverture
+        env:
+          COVERAGE_THRESHOLD: ${{ inputs.coverage || '80' }}
+        run: python -m pytest -v --cov=app --cov-report=term-missing --cov-fail-under="$COVERAGE_THRESHOLD"
