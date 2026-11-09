@@ -1,16 +1,29 @@
 name: Premier workflow CI
 
-
 on:
   push:
   workflow_dispatch:
 
+permissions:
+  contents: read
 
 jobs:
   hello:
     runs-on: ubuntu-latest
-
-
     steps:
       - name: Afficher un message
         run: echo "Hello from GitHub Actions"
+      - name: Informations du runner
+        run: |
+          python --version
+          pwd
+          ls -la
+      - name: Informations Git
+        run: |
+          echo "Branche : $GITHUB_REF_NAME"
+          echo "Commit : $GITHUB_SHA"
+          echo "Événement : $GITHUB_EVENT_NAME"
+      - name: Erreur volontaire
+        run: exit 1
+      - name: Étape après l'erreur
+        run: echo "Cette étape sera ignorée si la précédente échoue."
